@@ -5,13 +5,11 @@ import { cartActions } from "../../store/cart-slice";
 const CartItem = (props) => {
   const { title, quantity, total, price, id } = props.item;
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // console.log(props.item);
-
-  // const addItemHandler = () => {
-  //   dispatch(cartActions.addItemToCart(id, title, price));
-  // };
+  const addItemHandler = () => {
+    dispatch(cartActions.addItemToCart({id, title, price}));
+  };
 
   return (
     <li className={classes.item}>
