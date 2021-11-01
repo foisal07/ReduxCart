@@ -16,7 +16,10 @@ export const sendCartData = (cart) => {
         "https://rduxcart-default-rtdb.europe-west1.firebasedatabase.app/cart.json",
         {
           method: "PUT",
-          body: JSON.stringify(cart),
+          body: JSON.stringify({
+            items: cart.items,
+            totalQuantity: cart.totalQuantity,
+          }),
         }
       );
 
@@ -59,7 +62,7 @@ export const fetchCartData = () => {
       const storedItems = await fetchData();
       dispatch(
         cartActions.replaceCart({
-          items: storedItems.items,
+          items: storedItems.items || [],
           totalQuantity: storedItems.totalQuantity,
         })
       );
