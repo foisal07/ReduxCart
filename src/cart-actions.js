@@ -1,3 +1,4 @@
+import { cartActions } from "./store/cart-slice";
 import { uiActions } from "./store/ui-slice";
 
 export const sendCartData = (cart) => {
@@ -34,6 +35,35 @@ export const sendCartData = (cart) => {
         })
       );
     } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong :(",
+        })
+      );
+    }
+  };
+};
+
+export const fetchCartData = () => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://rduxcart-default-rtdb.europe-west1.firebasedatabase.app/cart.json"
+      );
+      const data = await response.json();
+      return data;
+    };
+    try {
+      const storedItems = await fetchData();
+      dispatch(
+        cartActions.replaceCart({
+          items: storedItems.items,
+          totalQuantity: storedItems.totalQuantity,
+        })
+      );
+    } catch (err) {
       dispatch(
         uiActions.showNotification({
           status: "error",

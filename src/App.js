@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Notification from "./components/UI/Notification";
 import { useDispatch } from "react-redux";
 import { sendCartData } from "./cart-actions";
+import { fetchCartData } from "./cart-actions";
 
 let initialLoad = true;
 
@@ -17,11 +18,15 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (initialLoad) {
       initialLoad = false;
       return;
     }
-    
+
     dispatch(sendCartData(cart));
   }, [cart, dispatch]);
 
